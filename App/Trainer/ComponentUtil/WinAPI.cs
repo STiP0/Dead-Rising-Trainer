@@ -51,13 +51,18 @@ namespace Trainer.ComponentUtil
         VK_KEY_A = 0x41,
         VK_KEY_D = 0x44,
         VK_KEY_E = 0x45,
+        VK_KEY_F = 0x46,
         VK_KEY_Q = 0x51,
+        VK_KEY_R = 0x52,
         VK_KEY_S = 0x53,
         VK_KEY_W = 0x57,
         VK_NUMPAD4 = 0x64,
         VK_NUMPAD5 = 0x65,
         VK_NUMPAD6 = 0x66,
-        VK_NUMPAD8 = 0x68
+        VK_NUMPAD8 = 0x68,
+        VK_LSHIFT = 0xA0,
+        VK_LCONTROL = 0xA2,
+        VK_LMENU = 0xA4
     }
 
     [Flags]
@@ -90,6 +95,7 @@ namespace Trainer.ComponentUtil
         DIRECT_IMPERSONATION = (0x0200)
     }
 
+    // For mouse cursor position (unused)
     [StructLayout(LayoutKind.Sequential)]
     public struct LpPoint
     {
@@ -206,6 +212,14 @@ namespace Trainer.ComponentUtil
             public IntPtr lpBaseOfDll;
             public uint SizeOfImage;
             public IntPtr EntryPoint;
+        }
+    }
+
+    public static class WinAPIExtensionMethods
+    {
+        public static bool IsDown(this VirtualKey vk)
+        {
+            return (WinAPI.GetKeyState((int)vk) & (1 << 15)) != 0;
         }
     }
 }
